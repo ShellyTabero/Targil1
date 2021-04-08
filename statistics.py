@@ -18,7 +18,7 @@ def median(values):
 
 def population_statistics(feature_description, data, treatment, target, threshold, is_above,
 statistic_functions):
-
+    print(feature_description)
     lst = []
     if is_above:
         for index, value in enumerate(data[treatment]):
