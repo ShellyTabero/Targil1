@@ -1,4 +1,5 @@
 import math
+import data
 
 def sum(values):
     sum_values = 0
@@ -28,4 +29,4 @@ statistic_functions):
         for index, value in enumerate(data[treatment]):
             if value <= threshold:
                 lst.append(data[target][index])
-    print("{}: {}, {}".format(target, statistic_functions[1](lst), statistic_functions[2](lst)))
+    print("{}: {}, {}".format(target, statistic_functions[0](lst), statistic_functions[1](lst)))

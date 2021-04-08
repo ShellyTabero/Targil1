@@ -1,18 +1,22 @@
 import pandas
-def load_data(path,features):
+
+
+def load_data(path, features):
     df = pandas.read_csv(path)
     data = df.to_dict(orient="list")
+    for key in list(data.keys()):
+        if key not in features:
+            data.pop(key)
     return data
+
 
 def filter_by_feature(data, feature, values):
     data1 = {}
     data2 = {}
     all_features = list(data.keys())
-    for all_features in data:
-        data1.setdefault(all_features, [])
-        data2.setdefault(all_features, [])
-    #data1 = {"cnt":[], "season":[], "is_holiday":[],"hum":[],"t1":[]}
-    #data2 = {"cnt":[], "season":[], "is_holiday":[],"hum":[],"t1":[]}
+    for key in all_features:
+        data1.setdefault(key, [])
+        data2.setdefault(key, [])
     lst = data[feature]
     for index, value in enumerate(lst):
         if value in values:
@@ -23,14 +27,12 @@ def filter_by_feature(data, feature, values):
                 data2[category].append(data[category][index])
     return data1, data2
 
+
 def print_details(data, features, statistic_functions):
     for category in features:
         lst = data[category]
+        results = []
         print(category, end=": ")
         for method in statistic_functions:
-            print("{}, ".format(method(lst)), end=" ")
-        print("\n")
-        """sum = statistic_functions[0](lst)
-        mean = statistic_functions[1](lst)
-        median = statistic_functions[2](lst)
-        print("{}: {}, {}, {}".format(category, sum, mean, median))"""
+            results.append(str(method(lst)))
+        print(", ".join(results))
