@@ -17,16 +17,20 @@ def median(values):
         return (x1 + x2)/2
     return values[math.ceil(len(values)/2) - 1]
 
-def population_statistics(feature_description, data, treatment, target, threshold, is_above,
+def population_statistics(feature_description, data1, treatment, target, threshold, is_above,
 statistic_functions):
     print(feature_description)
-    lst = []
+    dic = {}
+    for key in list(data1.keys()):
+        dic.setdefault(key, [])
     if is_above:
-        for index, value in enumerate(data[treatment]):
+        for row, value in enumerate(data1[treatment]):
             if value > threshold:
-                lst.append(data[target][index])
+                for key in list(data.keys()):
+                    dic[key].append(data1[key][row])
     else:
-        for index, value in enumerate(data[treatment]):
+        for row, value in enumerate(data1[treatment]):
             if value <= threshold:
-                lst.append(data[target][index])
-    print("{}: {}, {}".format(target, statistic_functions[0](lst), statistic_functions[1](lst)))
+                for key in list(data1.keys()):
+                    dic[key].append(data1[key][row])
+    data.print_details(dic, [target], statistic_functions)
